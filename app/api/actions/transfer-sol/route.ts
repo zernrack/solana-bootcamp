@@ -7,10 +7,10 @@ export const GET = async (req: Request) => {
 
 
     const payload: ActionGetResponse = {
-        title: "Transfer 1 SOL",
-        icon: "https://raw.githubusercontent.com/solana-developers/solana-actions/main/examples/next-js/public/solana_devs.jpg",
+        title: "SuperteamPHL 🇵🇭 Transfer SOL BLINK",
+        icon: "https://i.imgur.com/wKY2gEc.jpeg",
         description: "Transfer SOL to another wallet",
-        label: "Give 1 SOL"
+        label: "Give 1 SOL 🤙🏻🤙🏻🤙🏻"
     }
 
     return Response.json(payload, {
