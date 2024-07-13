@@ -1,11 +1,7 @@
 import { ACTIONS_CORS_HEADERS, ActionGetResponse, ActionPostRequest, ActionPostResponse, createPostResponse } from "@solana/actions";
-import { PublicKey } from "@solana/web3.js";
 import { transferSolTransaction } from "./transaction";
 
-
 export const GET = async (req: Request) => {
-
-
     const payload: ActionGetResponse = {
         title: "SuperteamPHL 🇵🇭 Transfer SOL BLINK",
         icon: "https://i.imgur.com/wKY2gEc.jpeg",
@@ -15,7 +11,7 @@ export const GET = async (req: Request) => {
 
     return Response.json(payload, {
         headers: ACTIONS_CORS_HEADERS,
-      });
+    });
 }
 
 export const OPTIONS = GET;
@@ -26,11 +22,11 @@ export const POST = async (req: Request) => {
 
     const payload: ActionPostResponse = await createPostResponse({
         fields: {
-          transaction,
-          message: `Send 1 SOL`,
+            transaction,
+            message: `Send 1 SOL`,
         },
-      });
-      return Response.json(payload, {
+    });
+    return Response.json(payload, {
         headers: ACTIONS_CORS_HEADERS,
-      });
+    });
 }
