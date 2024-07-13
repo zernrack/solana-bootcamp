@@ -1,41 +1,26 @@
-import { ACTIONS_CORS_HEADERS, ActionGetResponse, ActionPostRequest, ActionPostResponse, createPostResponse } from "@solana/actions";
-import { transferSolTransaction } from "../api/actions/transfer-sol/transaction";
-import { PublicKey } from "@solana/web3.js";
+import { ACTIONS_CORS_HEADERS, ActionsJson } from "@solana/actions";
 
+export const GET = async () => {
+  const payload: ActionsJson = {
+    rules: [
+      // map all root level routes to an action
+      {
+        pathPattern: "/*",
+        apiPath: "/api/actions/*",
+      },
+      // idempotent rule as the fallback
+      {
+        pathPattern: "/api/actions/**",
+        apiPath: "/api/actions/**",
+      },
+    ],
+  };
 
-export const GET = async (req: Request) => {
+  return Response.json(payload, {
+    headers: ACTIONS_CORS_HEADERS,
+  });
+};
 
-
-    const payload: ActionGetResponse = {
-        title: "Transfer 1 SOL",
-        icon: "https://raw.githubusercontent.com/solana-developers/solana-actions/main/examples/next-js/public/solana_devs.jpg",
-        description: "Transfer SOL to another wallet",
-        label: "Give 1 SOL"
-    }
-
-    return Response.json(payload, {
-        headers: ACTIONS_CORS_HEADERS,
-      });
-}
-
+// DO NOT FORGET TO INCLUDE THE `OPTIONS` HTTP METHOD
+// THIS WILL ENSURE CORS WORKS FOR BLINKS
 export const OPTIONS = GET;
-
-export const POST = async (req: Request) => {
-    const body: ActionPostRequest = await req.json();
-
-    // const requestUrl = new URL(req.url);
-    // requestUrl.searchParams.get("amount")
-    // const account  = new PublicKey(body.account);
-
-    const transaction = await transferSolTransaction({ from: body.account, amount: 1 })
-
-    const payload: ActionPostResponse = await createPostResponse({
-        fields: {
-          transaction,
-          message: `Send 1 SOL`,
-        },
-      });
-      return Response.json(payload, {
-        headers: ACTIONS_CORS_HEADERS,
-      });
-}

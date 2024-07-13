@@ -22,11 +22,6 @@ export const OPTIONS = GET;
 
 export const POST = async (req: Request) => {
     const body: ActionPostRequest = await req.json();
-
-    // const requestUrl = new URL(req.url);
-    // requestUrl.searchParams.get("amount")
-    // const account  = new PublicKey(body.account);
-
     const transaction = await transferSolTransaction({ from: body.account, amount: 1 })
 
     const payload: ActionPostResponse = await createPostResponse({
